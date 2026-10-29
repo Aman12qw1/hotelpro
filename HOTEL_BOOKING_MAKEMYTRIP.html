@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HotelPro | MakeMyTrip Style Hotel Booking</title>
+  <meta name="description" content="MakeMyTrip inspired hotel details and reservation checkout experience.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --mmt-blue: #006ce4;
+      --mmt-blue-dark: #0052b3;
+      --mmt-blue-light: #eaf3ff;
+      --mmt-navy: #051430;
+      --mmt-green: #0a8528;
+      --mmt-green-bg: #eaf7ed;
+      --mmt-orange: #ff6d38;
+      --mmt-gold: #f5a623;
+      --mmt-gray-bg: #f4f6fa;
+      --mmt-card-bg: #ffffff;
+      --mmt-border: #e6edf7;
+      --text-main: #1a2b48;
+      --text-sub: #5b6c7f;
+      --text-muted: #8898aa;
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-full: 9999px;
+      --shadow-soft: 0 4px 18px rgba(5, 20, 48, 0.06);
+      --shadow-hover: 0 10px 30px rgba(0, 108, 228, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--mmt-gray-bg);
+      color: var(--text-main);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Nav */
+    .header-nav {
+      background: #ffffff;
+      border-bottom: 1px solid var(--mmt-border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    }
+    .header-inner {
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .brand-logo-badge {
+      background: var(--mmt-navy);
+      color: #fff;
+      font-weight: 800;
+      font-size: 18px;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      letter-spacing: 1px;
+    }
+    .brand-logo-badge span {
+      color: #0077ff;
+    }
+    .btn-back-catalog {
+      background: var(--mmt-blue-light);
+      color: var(--mmt-blue);
+      border: 1px solid var(--mmt-blue);
+      padding: 8px 18px;
+      border-radius: var(--radius-full);
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-back-catalog:hover {
+      background: var(--mmt-blue);
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 24px 20px 80px;
+    }
+
+    /* Breadcrumbs */
+    .breadcrumbs {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .breadcrumbs a {
+      color: var(--mmt-blue);
+      text-decoration: none;
+    }
+
+    /* Hotel Header Info */
+    .hotel-head-box {
+      background: #ffffff;
+      border: 1px solid var(--mmt-border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      box-shadow: var(--shadow-soft);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .badge-assured {
+      background: linear-gradient(135deg, #fff3d6 0%, #ffe094 100%);
+      color: #8c5700;
+      border: 1px solid #ffd573;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+    .hotel-h1 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--mmt-navy);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .hotel-location {
+      font-size: 14px;
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .rating-bubble-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .rating-number-badge {
+      background: var(--mmt-green);
+      color: #fff;
+      font-weight: 800;
+      font-size: 18px;
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .rating-text-group {
+      text-align: right;
+    }
+    .rating-grade {
+      font-weight: 800;
+      color: var(--mmt-navy);
+      font-size: 15px;
+    }
+    .rating-count {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* MMT Signature Photo Gallery Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: repeat(2, 190px);
+      gap: 12px;
+      margin-bottom: 28px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+    .gallery-hero {
+      grid-column: 1 / 2;
+      grid-row: 1 / 3;
+      position: relative;
+      cursor: pointer;
+    }
+    .gallery-hero img, .gallery-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .gallery-hero:hover img, .gallery-thumb:hover img {
+      transform: scale(1.03);
+    }
+    .gallery-thumb {
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .view-all-photos-tag {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      background: rgba(5, 20, 48, 0.85);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 8px 16px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(255,255,255,0.3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Main 2-Column Content */
+    .booking-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 28px;
+      align-items: flex-start;
+    }
+
+    /* Left Column Cards */
+    .mmt-section-card {
+      background: #ffffff;
+      border: 1px solid var(--mmt-border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-soft);
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--mmt-navy);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Highlights Banner */
+    .highlights-ribbon {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      background: var(--mmt-green-bg);
+      border: 1px solid rgba(10, 133, 40, 0.2);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: var(--mmt-green);
+      font-weight: 700;
+    }
+    .highlight-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Quick Specs Grid */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .spec-box {
+      background: var(--mmt-gray-bg);
+      border: 1px solid var(--mmt-border);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+    }
+    .spec-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .spec-val {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--mmt-navy);
+    }
+
+    /* Amenities Grid */
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      font-size: 14px;
+    }
+    .amenity-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-main);
+    }
+    .amenity-icon {
+      background: var(--mmt-blue-light);
+      color: var(--mmt-blue);
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    /* Spa & Experience Packages Addons */
+    .addon-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid var(--mmt-border);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .addon-item:hover, .addon-item.selected {
+      border-color: var(--mmt-blue);
+      background: var(--mmt-blue-light);
+    }
+    .addon-name {
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+    .addon-sub {
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    .addon-price-col {
+      text-align: right;
+    }
+    .addon-price {
+      font-weight: 800;
+      color: var(--mmt-blue);
+      font-size: 15px;
+    }
+
+    /* Verified Reviews Breakdown */
+    .reviews-score-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      background: var(--mmt-gray-bg);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .score-title {
+      font-size: 12px;
+      color: var(--text-sub);
+    }
+    .score-num {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--mmt-green);
+      margin-top: 2px;
+    }
+
+    /* Right Sticky Booking Card (MMT Signature) */
+    .sticky-booking-card {
+      position: sticky;
+      top: 90px;
+      background: #ffffff;
+      border: 1px solid var(--mmt-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(5, 20, 48, 0.1);
+    }
+    .price-headline {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--mmt-border);
+      padding-bottom: 16px;
+    }
+    .strike-price {
+      font-size: 14px;
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+    .active-price {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--mmt-navy);
+      line-height: 1;
+    }
+    .deal-badge {
+      background: var(--mmt-green-bg);
+      color: var(--mmt-green);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(10, 133, 40, 0.25);
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 14px;
+    }
+    .form-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .form-control {
+      width: 100%;
+      border: 1px solid var(--mmt-border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text-main);
+      outline: none;
+      background: #fff;
+      transition: border-color 0.2s;
+    }
+    .form-control:focus {
+      border-color: var(--mmt-blue);
+      box-shadow: 0 0 0 3px rgba(0, 108, 228, 0.12);
+    }
+
+    /* Coupon Box */
+    .coupon-box {
+      background: #fdf8eb;
+      border: 1px dashed #e6a817;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+    .coupon-code {
+      font-weight: 800;
+      color: #996300;
+      letter-spacing: 1px;
+    }
+
+    /* Bill Breakdown */
+    .bill-rows {
+      background: var(--mmt-gray-bg);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      margin-bottom: 20px;
+      font-size: 13px;
+    }
+    .bill-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      color: var(--text-sub);
+    }
+    .bill-total-row {
+      border-top: 1px solid var(--mmt-border);
+      padding-top: 10px;
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--mmt-navy);
+    }
+
+    /* MakeMyTrip Primary Button */
+    .btn-mmt-book {
+      background: linear-gradient(90deg, #0077ff 0%, #0056cc 100%);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.5px;
+      width: 100%;
+      padding: 14px;
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0, 108, 228, 0.35);
+      transition: all 0.2s;
+    }
+    .btn-mmt-book:hover {
+      background: linear-gradient(90deg, #0066ee 0%, #0044b3 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 108, 228, 0.45);
+    }
+
+    /* Payment Simulator View */
+    .payment-modal-screen {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 20, 48, 0.7);
+      backdrop-filter: blur(6px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .payment-modal-screen.active {
+      display: flex;
+    }
+    .payment-card-box {
+      background: #ffffff;
+      border-radius: var(--radius-lg);
+      max-width: 580px;
+      width: 100%;
+      padding: 30px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    /* Invoice Certificate View */
+    .voucher-screen {
+      display: none;
+      background: #fff;
+      border: 2px solid var(--mmt-green);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    @media (max-width: 992px) {
+      .booking-layout {
+        grid-template-columns: 1fr;
+      }
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 240px 140px;
+      }
+      .gallery-hero {
+        grid-column: 1 / 3;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top MakeMyTrip Style Header -->
+  <header class="header-nav">
+    <div class="header-inner">
+      <a href="OASIS_PALMS_RESORT.html" class="brand-wrap">
+        <div class="brand-logo-badge">HOTEL<span>PRO</span></div>
+        <div style="font-size: 13px; font-weight: 700; color: var(--mmt-navy);">
+          MAKEMYTRIP BOOKING PORTAL
+        </div>
+      </a>
+      <a href="OASIS_PALMS_RESORT.html" class="btn-back-catalog">
+        ← Back to All Hotels & Villas
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Breadcrumbs -->
+    <div class="breadcrumbs">
+      <a href="OASIS_PALMS_RESORT.html">Home</a> ➔ 
+      <a href="OASIS_PALMS_RESORT.html#catalog-section">Luxury Sanctuaries</a> ➔ 
+      <span id="crumb-hotel-title" style="font-weight: 600; color: var(--text-main);">Royal Overwater Sunset Villa</span>
+    </div>
+
+    <!-- Hotel Header Box -->
+    <div class="hotel-head-box">
+      <div>
+        <div class="badge-assured">
+          <span>🛡️</span> MMT ASSURED LUXURY RESORT
+        </div>
+        <h1 class="hotel-h1" id="page-hotel-title">
+          HotelPro Royal Overwater Sunset Villa
+        </h1>
+        <div class="hotel-location">
+          <span>📍</span>
+          <span id="page-hotel-location">North Lagoon Pier 4, Baa Atoll Biosphere Reserve, Maldives</span>
+          <span style="color: var(--mmt-blue); font-weight: 600; cursor: pointer; margin-left: 8px;">View on Map</span>
+        </div>
+      </div>
+
+      <div class="rating-bubble-block">
+        <div class="rating-text-group">
+          <div class="rating-grade">Excellent Stay</div>
+          <div class="rating-count">2,480 Verified Reviews</div>
+        </div>
+        <div class="rating-number-badge">
+          <span>4.9</span>
+          <span style="font-size: 14px;">★</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Signature Photo Gallery Grid -->
+    <div class="gallery-grid">
+      <div class="gallery-hero" onclick="switchMainImage(0)">
+        <img id="main-hero-img" src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80" alt="Main View">
+        <div class="view-all-photos-tag">
+          <span>📷</span> View All 18 Photos
+        </div>
+      </div>
+      <div class="gallery-thumb" onclick="switchMainImage(1)">
+        <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=80" alt="Pool View">
+      </div>
+      <div class="gallery-thumb" onclick="switchMainImage(2)">
+        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=600&q=80" alt="Ocean Deck">
+      </div>
+      <div class="gallery-thumb" onclick="switchMainImage(3)">
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80" alt="Stone Bath">
+      </div>
+      <div class="gallery-thumb" onclick="switchMainImage(4)">
+        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=600&q=80" alt="Sunset Lounge">
+      </div>
+    </div>
+
+    <!-- 2-Column Booking Layout -->
+    <div class="booking-layout">
+
+      <!-- LEFT COLUMN: Room Information & Amenities -->
+      <div>
+
+        <!-- MMT Inclusions Highlights Banner -->
+        <div class="highlights-ribbon">
+          <div class="highlight-item">✓ Complimentary Gourmet Breakfast</div>
+          <div class="highlight-item">✓ Private Seaplane Meet & Greet</div>
+          <div class="highlight-item">✓ Free Cancellation up to 24h</div>
+          <div class="highlight-item">✓ Dedicated 24/7 Island Butler</div>
+        </div>
+
+        <!-- Room Specs Card -->
+        <div class="mmt-section-card">
+          <h3 class="card-title">Villa Architecture & Dimensions</h3>
+          <div class="specs-grid">
+            <div class="spec-box">
+              <div class="spec-label">Accommodates</div>
+              <div class="spec-val">Up to 4 Guests</div>
+            </div>
+            <div class="spec-box">
+              <div class="spec-label">Villa Living Space</div>
+              <div class="spec-val">1,450 sq.ft</div>
+            </div>
+            <div class="spec-box">
+              <div class="spec-label">Private Plunge Pool</div>
+              <div class="spec-val">12m Infinity Pool</div>
+            </div>
+            <div class="spec-box">
+              <div class="spec-label">Bedding Setup</div>
+              <div class="spec-val">1 King + Daybed</div>
+            </div>
+          </div>
+          <p id="page-hotel-desc" style="color: var(--text-sub); font-size: 14px; line-height: 1.7;">
+            Perched directly above the turquoise Baa Atoll lagoon. Features transparent glass-floor living observation panels, outdoor freshwater rain shower, oversized catamaran sun nets, and private wooden stairs stepping into the live coral reef garden.
+          </p>
+        </div>
+
+        <!-- Curated Spa & Experience Add-ons (MMT Style) -->
+        <div class="mmt-section-card">
+          <h3 class="card-title">Curated Spa Rituals & Experiences (Optional Add-ons)</h3>
+          
+          <div class="addon-item" onclick="toggleMmtAddon(this, 5200, '90-Min Balinese Herbal Poultice Massage')">
+            <div>
+              <div class="addon-name">90-Min Balinese Herbal Poultice Massage</div>
+              <div class="addon-sub">Warm herbal compresses, lemongrass oils, and acupressure.</div>
+            </div>
+            <div class="addon-price-col">
+              <div class="addon-price">+₹5,200</div>
+              <div style="font-size: 11px; color: var(--text-muted);">+ Tap to add</div>
+            </div>
+          </div>
+
+          <div class="addon-item" onclick="toggleMmtAddon(this, 3500, 'Floating Ocean Champagne Breakfast')">
+            <div>
+              <div class="addon-name">Floating Ocean Champagne Breakfast</div>
+              <div class="addon-sub">Served on a woven tray in your private plunge pool with Moët & Chandon.</div>
+            </div>
+            <div class="addon-price-col">
+              <div class="addon-price">+₹3,500</div>
+              <div style="font-size: 11px; color: var(--text-muted);">+ Tap to add</div>
+            </div>
+          </div>
+
+          <div class="addon-item" onclick="toggleMmtAddon(this, 8500, 'Private Sunset Dhoni Catamaran Cruise')">
+            <div>
+              <div class="addon-name">Private Sunset Dhoni Catamaran Cruise</div>
+              <div class="addon-sub">Traditional handcrafted vessel with sommelier wine & dolphin spotting.</div>
+            </div>
+            <div class="addon-price-col">
+              <div class="addon-price">+₹8,500</div>
+              <div style="font-size: 11px; color: var(--text-muted);">+ Tap to add</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Amenities Grid -->
+        <div class="mmt-section-card">
+          <h3 class="card-title">Property & In-Villa Amenities</h3>
+          <div class="amenities-grid">
+            <div class="amenity-pill"><div class="amenity-icon">📶</div><span>High-Speed WiFi (1Gbps)</span></div>
+            <div class="amenity-pill"><div class="amenity-icon">🏊</div><span>Private Infinity Pool</span></div>
+            <div class="amenity-pill"><div class="amenity-icon">❄️</div><span>Climate Controlled AC</span></div>
+            <div class="amenity-pill"><div class="amenity-icon">☕</div><span>Nespresso Coffee Machine</span></div>
+            <div class="amenity-pill"><div class="amenity-icon">🛺</div><span>24/7 Island Buggy Service</span></div>
+            <div class="amenity-pill"><div class="amenity-icon">🛁</div><span>Open-Air Limestone Tub</span></div>
+            <div class="amenity-pill"><div class="amenity-icon">🍷</div><span>Curated Wine Refrigerator</span></div>
+            <div class="amenity-pill"><div class="amenity-icon">🤿</div><span>Snorkeling Gear Provided</span></div>
+            <div class="amenity-pill"><div class="amenity-icon">🌱</div><span>100% Solar Eco-Certified</span></div>
+          </div>
+        </div>
+
+        <!-- Verified Reviews Scores -->
+        <div class="mmt-section-card">
+          <h3 class="card-title">Verified Guest Review Breakdown</h3>
+          <div class="reviews-score-bar">
+            <div>
+              <div class="score-title">Cleanliness</div>
+              <div class="score-num">4.9 / 5</div>
+            </div>
+            <div>
+              <div class="score-title">Hospitality</div>
+              <div class="score-num">5.0 / 5</div>
+            </div>
+            <div>
+              <div class="score-title">Dining & Taste</div>
+              <div class="score-num">4.8 / 5</div>
+            </div>
+            <div>
+              <div class="score-title">Location & Reef</div>
+              <div class="score-num">4.9 / 5</div>
+            </div>
+          </div>
+          
+          <div style="border-top: 1px solid var(--mmt-border); padding-top: 14px; font-size: 13px; color: var(--text-sub);">
+            <strong>Recent Guest Review:</strong> "The overwater pool villa surpassed all expectations. Having our dedicated butler Kadek arrange floating breakfast while spotting baby reef sharks from the deck was unforgettable." 
+            <span style="color: var(--mmt-blue); font-weight: 700;">— Lord Sterling (Verified Stay)</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT STICKY COLUMN: MakeMyTrip Booking & Payment Box -->
+      <div>
+        <div class="sticky-booking-card">
+          
+          <!-- Price Headline -->
+          <div class="price-headline">
+            <div>
+              <div class="strike-price" id="strike-price-display">₹60,000</div>
+              <div class="active-price" id="nightly-price-display">₹48,000</div>
+              <div style="font-size: 11px; color: var(--text-muted);">per night + taxes</div>
+            </div>
+            <div class="deal-badge">20% SPECIAL DEAL</div>
+          </div>
+
+          <!-- Stay Dates & Configuration -->
+          <div class="form-group">
+            <label class="form-label">Check-in Date</label>
+            <input type="date" id="mmt-checkin-date" class="form-control" value="2026-11-20" onchange="recalculateMMTBill()">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;" class="form-group">
+            <div>
+              <label class="form-label">Nights</label>
+              <select id="mmt-nights-select" class="form-control" onchange="recalculateMMTBill()">
+                <option value="1">1 Night</option>
+                <option value="2">2 Nights</option>
+                <option value="3" selected>3 Nights Escape</option>
+                <option value="5">5 Nights Retreat</option>
+                <option value="7">7 Nights Royal</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label">Guests</label>
+              <select id="mmt-guests-select" class="form-control">
+                <option value="2">2 Adults</option>
+                <option value="4">4 Guests</option>
+                <option value="1">1 Adult</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Guest Information -->
+          <div class="form-group">
+            <label class="form-label">Lead Guest Name</label>
+            <input type="text" id="mmt-guest-name" class="form-control" value="Lord & Lady Sterling" placeholder="Your Full Name">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email for Tax Invoice Voucher</label>
+            <input type="email" id="mmt-guest-email" class="form-control" value="sterling.sanctuary@hotelpro.com" placeholder="Email address">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Special Butler Preference</label>
+            <input type="text" id="mmt-guest-pref" class="form-control" value="Chilled champagne on arrival, Sandalwood pillow aroma">
+          </div>
+
+          <!-- Coupon Box -->
+          <div class="coupon-box">
+            <div>
+              <span class="coupon-code">HOTELPRO20</span>
+              <div style="font-size: 11px; color: #805300;">Special 20% discount coupon applied</div>
+            </div>
+            <span style="color: var(--mmt-green); font-weight: 800;">✓ APPLIED</span>
+          </div>
+
+          <!-- Itemized Bill Breakdown -->
+          <div class="bill-rows">
+            <div class="bill-row">
+              <span>Base Villa Rate (<span id="bill-nights-label">3</span> nights):</span>
+              <strong id="bill-base-tariff">₹1,44,000</strong>
+            </div>
+            <div class="bill-row">
+              <span>Selected Spa & Experience Addons:</span>
+              <strong id="bill-addons-tariff">₹0</strong>
+            </div>
+            <div class="bill-row">
+              <span>Coupon Discount (HOTELPRO20):</span>
+              <strong style="color: var(--mmt-green);">- ₹28,800</strong>
+            </div>
+            <div class="bill-row">
+              <span>Biosphere Eco Conservation Tax (5%):</span>
+              <strong id="bill-eco-tax">₹5,760</strong>
+            </div>
+            <div class="bill-total-row">
+              <span>Total Payable:</span>
+              <span id="bill-grand-total" style="color: var(--mmt-blue);">₹1,20,960</span>
+            </div>
+          </div>
+
+          <!-- Book Button -->
+          <button class="btn-mmt-book" onclick="openPaymentGateway()">
+            PROCEED TO SECURE PAYMENT ➔
+          </button>
+
+          <div style="text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 12px;">
+            🔒 256-Bit SSL Encrypted • Instant Voucher Confirmation
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Voucher Result Card -->
+    <div class="voucher-screen" id="voucher-success-panel">
+      <div style="font-size: 48px; margin-bottom: 8px;">✓</div>
+      <h2 style="font-size: 26px; color: var(--mmt-navy); margin-bottom: 6px;">Reservation Confirmed!</h2>
+      <p style="color: var(--text-sub); font-size: 14px; margin-bottom: 20px;">Your MakeMyTrip-Style Booking Voucher & GST Invoice is generated.</p>
+
+      <div style="background: var(--mmt-gray-bg); border-radius: 8px; padding: 20px; max-width: 600px; margin: 0 auto 24px; text-align: left; font-size: 13px; line-height: 1.8;">
+        <div><strong>Booking ID:</strong> <span id="vouch-res-id" style="color: var(--mmt-blue); font-weight: 700;">#HP-MMT-99824</span></div>
+        <div><strong>Hotel Property:</strong> <span id="vouch-res-hotel">HotelPro Royal Overwater Sunset Villa</span></div>
+        <div><strong>Primary Guest:</strong> <span id="vouch-res-name">Lord & Lady Sterling</span></div>
+        <div><strong>Dates:</strong> <span id="vouch-res-dates">Nov 20 – Nov 23, 2026 (3 Nights)</span></div>
+        <div><strong>Total Paid:</strong> <span id="vouch-res-total" style="color: var(--mmt-green); font-weight: 700;">₹1,20,960</span> (Settled via 256-Bit Gateway)</div>
+      </div>
+
+      <div style="display: flex; gap: 14px; justify-content: center;">
+        <button class="btn-mmt-book" style="width: auto; padding: 12px 28px;" onclick="window.print()">
+          🖨️ Print / Save GST Tax Invoice
+        </button>
+        <button class="btn-back-catalog" onclick="window.location.href='OASIS_PALMS_RESORT.html'">
+          Return to Hotel Catalog
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Payment Simulator Modal -->
+  <div class="payment-modal-screen" id="payment-gateway-modal">
+    <div class="payment-card-box">
+      <button style="position: absolute; top: 16px; right: 16px; border: none; background: none; font-size: 20px; cursor: pointer;" onclick="closePaymentModal()">✕</button>
+      
+      <div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--mmt-blue); font-weight: 800; margin-bottom: 6px;">
+        SECURE PAYMENT CHECKOUT
+      </div>
+      <h3 style="font-size: 22px; font-weight: 800; color: var(--mmt-navy); margin-bottom: 16px;">
+        Select Payment Method
+      </h3>
+
+      <div style="display: flex; gap: 8px; margin-bottom: 20px;">
+        <button class="btn-back-catalog" style="flex: 1; justify-content: center; background: var(--mmt-blue); color: #fff;">Instant UPI / QR</button>
+        <button class="btn-back-catalog" style="flex: 1; justify-content: center;">Credit/Debit Card</button>
+        <button class="btn-back-catalog" style="flex: 1; justify-content: center;">NetBanking</button>
+      </div>
+
+      <div style="background: var(--mmt-gray-bg); border-radius: 8px; padding: 20px; text-align: center; margin-bottom: 20px;">
+        <div style="font-size: 13px; color: var(--text-sub); margin-bottom: 12px;">Scan with Google Pay, PhonePe, Paytm, or BHIM:</div>
+        <div style="width: 140px; height: 140px; background: #fff; border: 2px dashed var(--mmt-blue); border-radius: 8px; margin: 0 auto; display: flex; align-items: center; justify-content: center; font-size: 38px;">
+          📱
+        </div>
+        <div style="font-size: 12px; color: var(--mmt-green); font-weight: 700; margin-top: 10px;">
+          UPI ID: hotelpro.sanctuary@icici (Verified)
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--mmt-border); padding-top: 16px; margin-bottom: 20px;">
+        <div style="font-size: 13px; color: var(--text-sub);">Amount to Pay:</div>
+        <div id="modal-pay-amount" style="font-size: 24px; font-weight: 800; color: var(--mmt-navy);">₹1,20,960</div>
+      </div>
+
+      <button class="btn-mmt-book" onclick="completePaymentSuccess()">
+        SIMULATE PAYMENT SUCCESS ✓
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Sample Hotel / Villa Data
+    const hotelsData = {
+      'villa-1': {
+        title: 'HotelPro Royal Overwater Sunset Villa',
+        category: 'Overwater Lagoon Wing',
+        location: 'North Lagoon Pier 4, Baa Atoll Biosphere Reserve, Maldives',
+        price: 48000,
+        desc: 'Suspended directly over turquoise coral lagoons with glass floor observation panels, 12m infinity plunge pool, and private sunset catamaran dock.',
+        heroImg: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80',
+        images: [
+          'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80',
+          'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80'
+        ]
+      },
+      'villa-2': {
+        title: 'HotelPro Ocean Horizon Lagoon Bungalow',
+        category: 'Overwater Reef Wing',
+        location: 'South Barrier Reef, Maldives',
+        price: 42000,
+        desc: 'Wake up to dolphins gliding past your stilted deck with direct wooden ladder entry into calm azure waters and private catamaran net hammock.',
+        heroImg: 'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=1200&q=80',
+        images: [
+          'https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=1200&q=80',
+          'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80'
+        ]
+      },
+      'villa-3': {
+        title: 'HotelPro Beachfront Plunge Pool Pavilion',
+        category: 'Private Beach Cove',
+        location: 'Private Coral Cove, Bali',
+        price: 36000,
+        desc: 'Shaded beneath swaying coconut palms with powdery white sand steps, freshwater swimming pool, outdoor rain shower, and tropical daybed.',
+        heroImg: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80',
+        images: [
+          'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80',
+          'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
+          'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80'
+        ]
+      }
+    };
+
+    let activeHotel = hotelsData['villa-1'];
+    let selectedAddonsTotal = 0;
+
+    // Check URL parameters for hotel id
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const hotelId = urlParams.get('id') || 'villa-1';
+      if (hotelsData[hotelId]) {
+        activeHotel = hotelsData[hotelId];
+      }
+
+      document.getElementById('crumb-hotel-title').textContent = activeHotel.title;
+      document.getElementById('page-hotel-title').textContent = activeHotel.title;
+      document.getElementById('page-hotel-location').textContent = activeHotel.location;
+      document.getElementById('page-hotel-desc').textContent = activeHotel.desc;
+      document.getElementById('main-hero-img').src = activeHotel.heroImg;
+
+      recalculateMMTBill();
+    });
+
+    function switchMainImage(idx) {
+      if (activeHotel.images && activeHotel.images[idx]) {
+        document.getElementById('main-hero-img').src = activeHotel.images[idx];
+      }
+    }
+
+    function toggleMmtAddon(elem, price, name) {
+      elem.classList.toggle('selected');
+      if (elem.classList.contains('selected')) {
+        selectedAddonsTotal += price;
+      } else {
+        selectedAddonsTotal -= price;
+      }
+      recalculateMMTBill();
+    }
+
+    function recalculateMMTBill() {
+      const nights = parseInt(document.getElementById('mmt-nights-select').value || 3);
+      const baseTariff = activeHotel.price * nights;
+      const strikeTariff = Math.round(baseTariff * 1.25);
+      const discount = Math.round(baseTariff * 0.20);
+      const ecoTax = Math.round((baseTariff - discount) * 0.05);
+      const grandTotal = (baseTariff - discount) + selectedAddonsTotal + ecoTax;
+
+      document.getElementById('strike-price-display').textContent = `₹${Math.round(activeHotel.price * 1.25).toLocaleString('en-IN')}`;
+      document.getElementById('nightly-price-display').textContent = `₹${activeHotel.price.toLocaleString('en-IN')}`;
+      document.getElementById('bill-nights-label').textContent = nights;
+      document.getElementById('bill-base-tariff').textContent = `₹${baseTariff.toLocaleString('en-IN')}`;
+      document.getElementById('bill-addons-tariff').textContent = `₹${selectedAddonsTotal.toLocaleString('en-IN')}`;
+      document.getElementById('bill-eco-tax').textContent = `₹${ecoTax.toLocaleString('en-IN')}`;
+      document.getElementById('bill-grand-total').textContent = `₹${grandTotal.toLocaleString('en-IN')}`;
+      document.getElementById('modal-pay-amount').textContent = `₹${grandTotal.toLocaleString('en-IN')}`;
+    }
+
+    function openPaymentGateway() {
+      document.getElementById('payment-gateway-modal').classList.add('active');
+    }
+
+    function closePaymentModal() {
+      document.getElementById('payment-gateway-modal').classList.remove('active');
+    }
+
+    function completePaymentSuccess() {
+      closePaymentModal();
+      const guestName = document.getElementById('mmt-guest-name').value;
+      const nights = document.getElementById('mmt-nights-select').value;
+      const total = document.getElementById('bill-grand-total').textContent;
+
+      document.getElementById('vouch-res-id').textContent = '#HP-MMT-' + Math.floor(10000 + Math.random() * 90000);
+      document.getElementById('vouch-res-hotel').textContent = activeHotel.title;
+      document.getElementById('vouch-res-name').textContent = guestName;
+      document.getElementById('vouch-res-dates').textContent = `Nov 20 – Nov ${20 + parseInt(nights)}, 2026 (${nights} Nights)`;
+      document.getElementById('vouch-res-total').textContent = total;
+
+      document.getElementById('voucher-success-panel').style.display = 'block';
+      document.getElementById('voucher-success-panel').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
