@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HotelPro | Secure Member & Staff Login</title>
+  <meta name="description" content="Login to HotelPro for guest reservations, staff operations, and management controls.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --mmt-blue: #006ce4;
+      --mmt-blue-dark: #0052b3;
+      --mmt-navy: #051430;
+      --mmt-green: #0a8528;
+      --mmt-gray-bg: #f4f6fa;
+      --mmt-border: #e6edf7;
+      --text-main: #1a2b48;
+      --text-sub: #5b6c7f;
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --shadow-soft: 0 10px 30px rgba(5, 20, 48, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(180deg, #eef4fc 0%, #ffffff 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Nav */
+    .header-nav {
+      background: #ffffff;
+      border-bottom: 1px solid var(--mmt-border);
+      padding: 14px 24px;
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-logo-badge {
+      background: var(--mmt-navy);
+      color: #fff;
+      font-weight: 800;
+      font-size: 18px;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      letter-spacing: 1px;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .brand-logo-badge span {
+      color: #0077ff;
+    }
+    .nav-links-right {
+      display: flex;
+      gap: 16px;
+    }
+    .nav-link {
+      color: var(--text-sub);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    .nav-link:hover {
+      color: var(--mmt-blue);
+    }
+
+    /* Main Login Container */
+    .login-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .login-card {
+      background: #ffffff;
+      border: 1px solid var(--mmt-border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 15px 40px rgba(5, 20, 48, 0.1);
+    }
+    .login-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--mmt-blue);
+      font-weight: 800;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .login-h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--mmt-navy);
+      margin-bottom: 8px;
+    }
+    .login-sub {
+      font-size: 13px;
+      color: var(--text-sub);
+      margin-bottom: 24px;
+    }
+
+    /* 1-Click Role Switcher Demo Cards */
+    .quick-roles-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-sub);
+      margin-bottom: 10px;
+    }
+    .quick-roles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .role-card-btn {
+      background: var(--mmt-gray-bg);
+      border: 1.5px solid var(--mmt-border);
+      border-radius: var(--radius-sm);
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .role-card-btn:hover, .role-card-btn.active {
+      border-color: var(--mmt-blue);
+      background: #eaf3ff;
+      transform: translateY(-2px);
+    }
+    .role-icon {
+      font-size: 22px;
+      margin-bottom: 4px;
+    }
+    .role-name {
+      font-weight: 800;
+      font-size: 12px;
+      color: var(--mmt-navy);
+    }
+    .role-dest {
+      font-size: 10px;
+      color: var(--text-sub);
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .form-control {
+      width: 100%;
+      border: 1px solid var(--mmt-border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 14px;
+      color: var(--text-main);
+      outline: none;
+      background: #fff;
+      font-family: inherit;
+    }
+    .form-control:focus {
+      border-color: var(--mmt-blue);
+      box-shadow: 0 0 0 3px rgba(0, 108, 228, 0.12);
+    }
+
+    .btn-login {
+      background: linear-gradient(90deg, #0077ff 0%, #0056cc 100%);
+      color: #fff;
+      font-weight: 800;
+      font-size: 15px;
+      width: 100%;
+      padding: 14px;
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0, 108, 228, 0.35);
+      transition: all 0.2s;
+      margin-top: 8px;
+    }
+    .btn-login:hover {
+      background: linear-gradient(90deg, #0066ee 0%, #0044b3 100%);
+      transform: translateY(-2px);
+    }
+
+    .preconfigured-box {
+      background: #fdf8eb;
+      border: 1px dashed #e6a817;
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      margin-top: 20px;
+      font-size: 12px;
+      line-height: 1.6;
+      color: #7a5000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="header-nav">
+    <div class="header-inner">
+      <a href="OASIS_PALMS_RESORT.html" class="brand-logo-badge">
+        HOTEL<span>PRO</span>
+      </a>
+      <div class="nav-links-right">
+        <a href="OASIS_PALMS_RESORT.html" class="nav-link">🏨 Hotel Catalog</a>
+        <a href="HOTEL_BOOKING_MAKEMYTRIP.html" class="nav-link">📅 Book Room</a>
+        <a href="MY_BOOKINGS_PAGE.html" class="nav-link">📑 My Bookings</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Login Card Section -->
+  <div class="login-container">
+    <div class="login-card">
+      <span class="login-tag">AUTHENTICATION GATEWAY</span>
+      <h1 class="login-h1">Sign in to HotelPro</h1>
+      <p class="login-sub">Access your personal booking vouchers, staff desk, or general manager console.</p>
+
+      <!-- 1-Click Role Logins for Testing & Evaluation -->
+      <div class="quick-roles-title">⚡ 1-Click Evaluation Login (Preconfigured Roles):</div>
+      <div class="quick-roles-grid">
+        <div class="role-card-btn active" onclick="selectRole('guest')">
+          <div class="role-icon">👤</div>
+          <div class="role-name">Guest</div>
+          <div class="role-dest">My Bookings</div>
+        </div>
+        <div class="role-card-btn" onclick="selectRole('staff')">
+          <div class="role-icon">🛎️</div>
+          <div class="role-name">Staff</div>
+          <div class="role-dest">Butler Desk</div>
+        </div>
+        <div class="role-card-btn" onclick="selectRole('admin')">
+          <div class="role-icon">🛡️</div>
+          <div class="role-name">Admin</div>
+          <div class="role-dest">GM Console</div>
+        </div>
+      </div>
+
+      <!-- Credentials Form -->
+      <form onsubmit="handleLoginSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="login-email" class="form-control" value="guest@hotelpro.com" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="login-password" class="form-control" value="Password123!" required>
+        </div>
+
+        <button type="submit" class="btn-login" id="submit-btn-label">
+          Sign In as Guest ➔
+        </button>
+      </form>
+
+      <!-- Pre-Configured Test Credentials Info Box -->
+      <div class="preconfigured-box">
+        <strong>📋 Pre-Configured Test Credentials:</strong><br>
+        • <strong>Guest:</strong> `guest@hotelpro.com` / `Password123!`<br>
+        • <strong>Staff:</strong> `staff@hotelpro.com` / `Password123!`<br>
+        • <strong>Admin:</strong> `admin@hotelpro.com` / `Password123!`
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentSelectedRole = 'guest';
+
+    function selectRole(role) {
+      currentSelectedRole = role;
+      document.querySelectorAll('.role-card-btn').forEach(b => b.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      if (role === 'guest') {
+        document.getElementById('login-email').value = 'guest@hotelpro.com';
+        document.getElementById('submit-btn-label').textContent = 'Sign In to My Bookings ➔';
+      } else if (role === 'staff') {
+        document.getElementById('login-email').value = 'staff@hotelpro.com';
+        document.getElementById('submit-btn-label').textContent = 'Sign In to Butler Staff Desk ➔';
+      } else if (role === 'admin') {
+        document.getElementById('login-email').value = 'admin@hotelpro.com';
+        document.getElementById('submit-btn-label').textContent = 'Sign In to GM Admin Console ➔';
+      }
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+
+      if (email.includes('admin') || currentSelectedRole === 'admin') {
+        window.location.href = 'OASIS_PALMS_RESORT.html#admin';
+      } else if (email.includes('staff') || currentSelectedRole === 'staff') {
+        window.location.href = 'OASIS_PALMS_RESORT.html#butler';
+      } else {
+        window.location.href = 'MY_BOOKINGS_PAGE.html';
+      }
+    }
+  </script>
+</body>
+</html>
