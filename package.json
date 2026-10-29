@@ -1,0 +1,22 @@
+{
+  "name": "hotelpro-resort-sanctuary",
+  "version": "1.0.0",
+  "description": "HotelPro - Luxury Eco-Resort & Spa Sanctuary (Full-Stack MERN & Web Application)",
+  "scripts": {
+    "server": "node server/server.js",
+    "client": "node -e \"console.log('Open index.html directly in your browser or run a static server')\"",
+    "start": "node server/server.js",
+    "dev": "node server/server.js",
+    "seed": "node server/seed/seed.js"
+  },
+  "keywords": [
+    "hotelpro",
+    "resort-management",
+    "overwater-villas",
+    "spa-sanctuary",
+    "hospitality",
+    "mern"
+  ],
+  "author": "Aman (HotelPro Engineering)",
+  "license": "MIT"
+}
