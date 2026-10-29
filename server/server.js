@@ -31,6 +31,11 @@ app.use('/api/bookings', bookingRoutes);
 app.use('/api/butler', butlerRoutes);
 app.use('/api/auth', authRoutes);
 
+// Compatibility Redirects for legacy links
+app.get(['/OASIS_PALMS_RESORT.html', '/HotelPro_Edition_1.html'], (req, res) => {
+  res.redirect(301, '/index.html');
+});
+
 // Serve Frontend Static Files from root & client directory
 const projectRoot = path.join(__dirname, '..');
 app.use(express.static(projectRoot));
